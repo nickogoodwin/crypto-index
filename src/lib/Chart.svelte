@@ -51,10 +51,6 @@
 						}
 						if (context.parsed.y !== null) {
 							label += formatPrice(context.parsed.y);
-							// label += new Intl.NumberFormat('en-US', {
-							// 	style: 'currency',
-							// 	currency: 'USD',
-							// }).format();
 						}
 						return label;
 					},
