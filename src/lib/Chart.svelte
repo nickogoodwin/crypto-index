@@ -1,6 +1,7 @@
 <script>
 	import axios from 'axios';
-	import analyze from 'rgbaster';
+	// import analyze from 'rgbaster';
+
 	import { fade } from 'svelte/transition';
 
 	import Line from 'svelte-chartjs/src/Line.svelte';
@@ -17,7 +18,7 @@
 				lineTension: 0.3,
 				color: 'rgb(255,255,255)',
 				backgroundColor: 'rgba(204, 153, 0, 0.3)',
-				borderColor: 'rgb(205, 130, 158)',
+				borderColor: '#0e7490',
 				borderCapStyle: 'butt',
 				borderDash: [],
 				borderDashOffset: 0.0,
@@ -77,8 +78,6 @@
 		},
 	};
 
-	console.log(formatPrice(100));
-
 	let getChartData = async () => {
 		await axios
 			.get(`https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart`, {
@@ -108,15 +107,25 @@
 			})
 			.catch((e) => console.log(e));
 
-		let imageColors = await analyze(coin.image);
+		if (coin.price_change_24h < 0) {
+			coin.market_chart.datasets[0].borderColor = 'rgb(239, 68, 68)';
+			coin.market_chart.datasets[0].backgroundColor = 'rgb(239, 68, 68)';
+		} else {
+			coin.market_chart.datasets[0].borderColor = 'rgb(34,197,94)';
+			coin.market_chart.datasets[0].backgroundColor = 'rgb(34,197,94)';
+		}
 
-		let primaryColor = imageColors[0].color;
-		let secondaryColor = imageColors[1].color;
+		// IMAGE ANALYZER TO SET THE CHART COLOR TO THE COLOR OF THE COIN LOGO
+		// However it's running into a CORS issue and idk how to fix it :/
 
-		coin.market_chart.datasets[0].borderColor = primaryColor;
-		coin.market_chart.datasets[0].backgroundColor = primaryColor;
-		coin.market_chart.datasets[0].pointBorderColor = primaryColor;
-		coin.market_chart.datasets[0].pointBackgroundColor = primaryColor;
+		// let imageColors = await analyze(coin.image);
+
+		// let primaryColor = imageColors[0].color;
+
+		// coin.market_chart.datasets[0].borderColor = primaryColor;
+		// coin.market_chart.datasets[0].backgroundColor = primaryColor;
+		// coin.market_chart.datasets[0].pointBorderColor = primaryColor;
+		// coin.market_chart.datasets[0].pointBackgroundColor = primaryColor;
 	};
 
 	let coinChartData = getChartData();
@@ -172,7 +181,7 @@
 		</div> -->
 		<Line data={coin.market_chart} {options} height={250} width={400} />
 	{:catch}
-		<h1>could not load chart</h1>
+		<h1>could not load chart data</h1>
 	{/await}
 </div>
 

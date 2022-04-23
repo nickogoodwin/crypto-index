@@ -70,11 +70,11 @@
 				</div>
 			</div>
 
-			<Chart {coin} {formatPrice} />
+			<Chart {coin} {index} {formatPrice} />
 
 			<!-- Remove Button -->
 			<input
-				class="w-1/4 bg-rose-600 hover:bg-rose-500 cursor-pointer rounded-full text-white px-4 py-2"
+				class="w-24 bg-rose-600 hover:bg-rose-500 cursor-pointer rounded-full text-white px-4 py-2"
 				type="button"
 				value="Remove"
 				on:click={() => removeCoin(index)}
