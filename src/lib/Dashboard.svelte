@@ -48,9 +48,15 @@
 				<div class="flex flex-col flex-grow justify-center items-center">
 					<div>
 						<p>Current Price:</p>
-						<span class="text-green-500 text-xl"
-							>{formatPrice(coin.current_price)}</span
-						>
+						{#if coin.price_change_24h >= 0}
+							<span class="text-green-500 text-xl"
+								>{formatPrice(coin.current_price)}</span
+							>
+						{:else}
+							<span class="text-red-500 text-xl"
+								>{formatPrice(coin.current_price)}</span
+							>
+						{/if}
 					</div>
 
 					<div>

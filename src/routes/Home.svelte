@@ -1,6 +1,6 @@
 <script>
 	import axios from 'axios';
-	import analyze from 'rgbaster';
+	// import analyze from 'rgbaster';
 
 	import Search from '../lib/Search.svelte';
 	import Dashboard from '../lib/Dashboard.svelte';
@@ -108,9 +108,6 @@
 		)
 			return;
 		let currentCoin = coins.find((coin) => coin.id === selectedCoin);
-
-		const logoColor = await analyze(currentCoin.image);
-		currentCoin.logoColor = logoColor[0].color;
 
 		dashboardCoins = [...dashboardCoins, currentCoin];
 	};
